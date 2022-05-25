@@ -1,0 +1,80 @@
+import matplotlib.pyplot as plt
+import pandas as pd
+ 
+af = pd.read_excel('aborty.xlsx', index_col=0, header=2)
+ 
+ 
+def net(x):
+    if '(' in x:
+        x = x.split('(')
+        return x[0]
+    else:
+        return x
+ 
+ 
+def intt(x):
+    x = x.strip()
+    if ',' in x:
+        x = x.split(',')
+        return int(''.join(x))
+    elif x.isdigit():
+        return int(x)
+    else:
+        return x
+ 
+ 
+def nan(x):
+    if x == '—':
+        return None
+    else:
+        return x
+ 
+ 
+af = af.applymap(net)
+af = af.applymap(intt)
+af = af.applymap(nan)
+ 
+# statistics:
+print(f'Info about abortions among Hispanic ethnic group:\n'
+      f'\tMean value: {af["Hispanic"].mean()}\n'
+      f'\tMedian value: {af["Hispanic"].median()}\n'
+      f'\tStandard deviation: {af["Hispanic"].std()}\n')
+ 
+print(f'Info about abortions among "15 or less" age group:\n'
+      f'\tMean value: {af["<15"].mean()}\n'
+      f'\tMedian value: {af["<15"].median()}\n'
+      f'\tStandard deviation: {af["<15"].std()}\n')
+ 
+print(f'Info about abortions among "20–24" age group:\n'
+      f'\tMean value: {af["20–24"].mean()}\n'
+      f'\tMedian value: {af["20–24"].median()}\n'
+      f'\tStandard deviation: {af["20–24"].std()}')
+ 
+# graph 1 depicting abortions among Hispanic ethnic group
+af.plot(y='Hispanic', color='#067B3D')
+plt.show()
+ 
+# pie-chart 2 showing proportion of abortions in Connecticut by racial/ethnic group
+con = af.loc['Connecticut']
+con['White':'Hispanic'].plot(y=af.loc['Connecticut'], kind='pie')
+plt.show()
+ 
+# bar-chart 3 showing abortions among '20–24' age group
+af.plot(y=['20–24'], kind='bar', color='#6E4B95')
+plt.show()
+ 
+# bar-chart 4 showing comparison of abortions among 2 racial groups
+af.plot.bar(y=['Black', 'White'], color=['#A6CD51', '#0C312A'])
+plt.show()
+ 
+# scatter-plot 5 showing correlation of the 2 racial groups observed before
+af.plot.scatter(x=['White'], y=['Black'], color=['#A6CD51'])
+plt.show()
+ 
+# graph 6 showing  abortions among 2 age groups
+af.plot(y=['15–19', '≥40'], color=['#396AFF', '#48465B'])
+plt.show()
+ 
+# scatter-plot 7 showing correlation of the 2 age groups observed before
+af.plot.scatter(x=['15–19'], y=['≥40'], color=['#48465B'])
+plt.show()
