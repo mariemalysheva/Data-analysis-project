@@ -81,7 +81,7 @@ print('\nBar-chart showing comparison of abortions among 2 racial groups')
 af.plot.bar(y=['Black', 'White'], color=['#A6CD51', '#0C312A'])
 plt.show()
 
-
+ 
 # scatter-plot 5
 print('\nScatter-plot showing correlation of the 2 racial groups observed before')
 
